@@ -1,0 +1,353 @@
+{
+    "version":  "memory_quality_v1",
+    "cases":  [
+                  {
+                      "case_id":  "temporal_preference_update",
+                      "category":  "temporal_correctness",
+                      "query":  "qtemporal Where does the user live now?",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "Berlin"
+                                                          ],
+                                       "forbidden_terms":  [
+                                                               "NYC"
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "fact:user-location-berlin"
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "project_constraint_recall",
+                      "category":  "constraint_recall",
+                      "query":  "qconstraint What local Go constraint should verification preserve?",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "CGO_ENABLED=0"
+                                                          ],
+                                       "forbidden_terms":  [
+
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "constraint:windows-cgo-disabled"
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "tenant_isolation",
+                      "category":  "authorization_isolation",
+                      "query":  "qtenant Return tenant alpha project memory only",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "tenant-alpha"
+                                                          ],
+                                       "forbidden_terms":  [
+                                                               "tenant-beta"
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "event:tenant-alpha-visible"
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "contradiction_superseded_fact",
+                      "category":  "contradiction",
+                      "query":  "qcontra What is the current API rate limit?",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "1000",
+                                                              "requests"
+                                                          ],
+                                       "forbidden_terms":  [
+                                                               "500"
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "fact:rate-limit-1000"
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "preference_editor_choice",
+                      "category":  "preference",
+                      "query":  "qpref Which editor does the user prefer?",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "Vim",
+                                                              "VS Code"
+                                                          ],
+                                       "forbidden_terms":  [
+
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "preference:editor-vim",
+                                                                   "preference:editor-vscode"
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "procedure_build_sequence",
+                      "category":  "procedure",
+                      "query":  "qproc How do you run the full verification suite?",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "py",
+                                                              "unittest",
+                                                              "go test",
+                                                              "CGO_ENABLED=0"
+                                                          ],
+                                       "forbidden_terms":  [
+
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "procedure:full-verification"
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "workspace_state_recovery",
+                      "category":  "workspace_state",
+                      "query":  "qws What is the current project status?",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "benchmark workflow",
+                                                              "report-only"
+                                                          ],
+                                       "forbidden_terms":  [
+                                                               "fail mode"
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "workspace_state:benchmark-workflow-status"
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "decision_release_tag_policy",
+                      "category":  "decision",
+                      "query":  "qdec Should we move the v0.1.0-rc tag?",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "do not move"
+                                                          ],
+                                       "forbidden_terms":  [
+                                                               "move tag"
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "decision:rc-tag-policy"
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "retention_forgotten_stale_preference",
+                      "category":  "forgetting",
+                      "query":  "qret What was the user\u0027s old Python version preference?",
+                      "expected":  {
+                                       "required_terms":  [
+
+                                                          ],
+                                       "forbidden_terms":  [
+                                                               "Python 3.7"
+                                                           ],
+                                       "required_source_ids":  [
+
+                                                               ]
+                                   }
+                  },
+                  {
+                      "case_id":  "multi_hop_go_verification_derived_from_constraint",
+                      "category":  "multi_hop",
+                      "query":  "qmulti Why is CGO disabled for Go tests?",
+                      "expected":  {
+                                       "required_terms":  [
+                                                              "CGO_ENABLED=0",
+                                                              "Windows",
+                                                              "verification"
+                                                          ],
+                                       "forbidden_terms":  [
+
+                                                           ],
+                                       "required_source_ids":  [
+                                                                   "constraint:windows-cgo-disabled",
+                                                                   "decision:benchmark-report-only"
+                                                               ]
+                                   }
+                  },
+    {
+      "case_id": "profile_static_fact_stability",
+      "category": "profile",
+      "query": "qprof What are the user's core programming preferences?",
+      "expected": {
+        "required_terms": ["TypeScript", "prefers", "functional"],
+        "forbidden_terms": ["Python 2"],
+        "required_source_ids": ["profile:user-preferences"]
+      }
+    },
+    {
+      "case_id": "depth_entity_evolution_creates_version",
+      "category": "entity_evolution",
+      "query": "qdepth-evo evolve entity with 5 episodes",
+      "expected": {
+        "required_terms": ["entities_reviewed=", "audit="],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "depth_entity_evolution_skips_below_threshold",
+      "category": "entity_evolution",
+      "query": "qdepth-ev2 evolve entity with 1 episode",
+      "expected": {
+        "required_terms": ["entities_reviewed=", "audit"],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "depth_retention_transitions_old_event",
+      "category": "retention",
+      "query": "qdepth-ret reconcile retention old event",
+      "expected": {
+        "required_terms": ["commits_reviewed=", "audit"],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "depth_retention_procedure_stays_hot",
+      "category": "retention",
+      "query": "qdepth-ret2 reconcile retention procedure",
+      "expected": {
+        "required_terms": ["commits_reviewed=", "audit"],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "depth_forgetting_salience_evicts",
+      "category": "forgetting",
+      "query": "qdepth-fgt reconcile forgetting salience",
+      "expected": {
+        "required_terms": ["commits_reviewed=", "audit="],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "depth_forgetting_high_salience_preserved",
+      "category": "forgetting",
+      "query": "qdepth-fgt2 reconcile forgetting high salience",
+      "expected": {
+        "required_terms": ["commits_reviewed=", "audit"],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "agent_session_lifecycle",
+      "category": "agent_adoption",
+      "query": "qagent session lifecycle",
+      "expected": {
+        "required_terms": ["session_start", "workspace_state_recovered"],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "agent_cross_read",
+      "category": "agent_adoption",
+      "query": "qagent cross read decision",
+      "expected": {
+        "required_terms": ["decision", "MCP-first"],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "agent_secret_exclusion",
+      "category": "agent_adoption",
+      "query": "qagent secret exclusion",
+      "expected": {
+        "required_terms": ["secret_sanitized"],
+        "forbidden_terms": ["sk-abc123", "Bearer"],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "agent_budget_compliance",
+      "category": "agent_adoption",
+      "query": "qagent budget compliance",
+      "expected": {
+        "required_terms": ["budget_applied"],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {
+      "case_id": "agent_session_end_commits",
+      "category": "agent_adoption",
+      "query": "qagent session end commits",
+      "expected": {
+        "required_terms": ["session_end_committed", "event"],
+        "forbidden_terms": [],
+        "required_source_ids": []
+      }
+    },
+    {"case_id":"ingest_code_python","category":"ingestion","query":"ingest_code","expected":{"required_terms":["def","function"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_go","category":"ingestion","query":"ingest_code","expected":{"required_terms":["func"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_java","category":"ingestion","query":"ingest_code","expected":{"required_terms":["class"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_javascript","category":"ingestion","query":"ingest_code","expected":{"required_terms":["function"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_typescript","category":"ingestion","query":"ingest_code","expected":{"required_terms":["function","interface"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_html","category":"ingestion","query":"ingest_code","expected":{"required_terms":["span"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_c","category":"ingestion","query":"ingest_code","expected":{"required_terms":["void","include"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_cpp","category":"ingestion","query":"ingest_code","expected":{"required_terms":["class","include"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_rust","category":"ingestion","query":"ingest_code","expected":{"required_terms":["fn","struct"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_ruby","category":"ingestion","query":"ingest_code","expected":{"required_terms":["def","class"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_csharp","category":"ingestion","query":"ingest_code","expected":{"required_terms":["class","using"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_code_kotlin","category":"ingestion","query":"ingest_code","expected":{"required_terms":["fun","class"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_doc_markdown","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["heading"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_doc_latex","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["section"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_doc_docx","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["provider"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_doc_excel","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["provider"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_doc_ppt","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["provider"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_pdf","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["provider"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_diagram_drawio","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["node"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_diagram_mermaid","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["node"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_image_png","category":"ingestion","query":"ingest_media","expected":{"required_terms":["Image"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_image_svg","category":"ingestion","query":"ingest_media","expected":{"required_terms":["Image"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_audio_mp3","category":"ingestion","query":"ingest_media","expected":{"required_terms":["Audio"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_video_mp4","category":"ingestion","query":"ingest_media","expected":{"required_terms":["Video"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_archive_zip","category":"ingestion","query":"ingest_doc","expected":{"required_terms":["archive"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"ingest_unknown","category":"ingestion","query":"ingest_media","expected":{"required_terms":["Binary"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_github_list","category":"connectors","query":"connector","expected":{"required_terms":["github"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_github_download","category":"connectors","query":"connector","expected":{"required_terms":["github"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_gdrive_list","category":"connectors","query":"connector","expected":{"required_terms":["gdrive"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_gdrive_download","category":"connectors","query":"connector","expected":{"required_terms":["gdrive"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_notion_list","category":"connectors","query":"connector","expected":{"required_terms":["notion"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_notion_download","category":"connectors","query":"connector","expected":{"required_terms":["notion"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_onedrive_list","category":"connectors","query":"connector","expected":{"required_terms":["onedrive"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_onedrive_download","category":"connectors","query":"connector","expected":{"required_terms":["onedrive"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_feishu_list","category":"connectors","query":"connector","expected":{"required_terms":["feishu"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_feishu_download","category":"connectors","query":"connector","expected":{"required_terms":["feishu"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_tencent_list","category":"connectors","query":"connector","expected":{"required_terms":["tencent"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_tencent_download","category":"connectors","query":"connector","expected":{"required_terms":["tencent"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_s3_list","category":"connectors","query":"connector","expected":{"required_terms":["s3"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_s3_download","category":"connectors","query":"connector","expected":{"required_terms":["s3"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_azure_list","category":"connectors","query":"connector","expected":{"required_terms":["azure"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_azure_download","category":"connectors","query":"connector","expected":{"required_terms":["azure"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_smoke_unknown","category":"connectors","query":"connector","expected":{"required_terms":["connector"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"connector_smoke_empty","category":"connectors","query":"connector","expected":{"required_terms":["connector"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"bench_longmemeval_baseline","category":"benchmarks","query":"bench","expected":{"required_terms":["bm25"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"bench_longmemeval_Mneme","category":"benchmarks","query":"bench","expected":{"required_terms":["Mneme"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"bench_locomo_temporal","category":"benchmarks","query":"bench","expected":{"required_terms":["temporal"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"bench_locomo_multihop","category":"benchmarks","query":"bench","expected":{"required_terms":["multi-hop"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"bench_convomem_preference","category":"benchmarks","query":"bench","expected":{"required_terms":["preference"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"bench_report_generated","category":"benchmarks","query":"bench","expected":{"required_terms":["report"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"go_parity_dedup_fact","category":"go_parity","query":"go_parity","expected":{"required_terms":["dedup","fact"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"go_parity_dedup_knowledge","category":"go_parity","query":"go_parity","expected":{"required_terms":["dedup","knowledge"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"go_parity_ingest_code","category":"go_parity","query":"go_parity","expected":{"required_terms":["code","python"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"go_parity_ingest_doc","category":"go_parity","query":"go_parity","expected":{"required_terms":["document","heading"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"go_parity_ingest_pdf","category":"go_parity","query":"go_parity","expected":{"required_terms":["pdf","metadata"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"go_parity_ingest_image","category":"go_parity","query":"go_parity","expected":{"required_terms":["image","png"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"go_parity_contract_fixture","category":"go_parity","query":"go_parity","expected":{"required_terms":["contract","fixture"],"forbidden_terms":[],"required_source_ids":[]}},
+    {"case_id":"go_parity_raw_fallback","category":"go_parity","query":"go_parity","expected":{"required_terms":["raw","fallback"],"forbidden_terms":[],"required_source_ids":[]}}
+  ]
+}

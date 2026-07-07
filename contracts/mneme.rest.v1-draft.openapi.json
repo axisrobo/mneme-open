@@ -1,0 +1,223 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Mneme REST API Draft",
+    "version": "0.1.0-draft",
+    "description": "Shared REST contract served by both the Python (FastAPI) and Go runtimes. All routes are mounted under the /api/v1 prefix. Response field names are language-neutral; where the Go runtime cannot yet compute a field it returns a documented default (created_at: \"\", retention_state: \"active\", explanation: null) rather than omitting it."
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": ["health"],
+        "summary": "Service health",
+        "responses": {
+          "200": {
+            "description": "Service health",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {"status": {"type": "string", "const": "ok"}},
+                  "required": ["status"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/query/search": {
+      "post": {
+        "tags": ["query"],
+        "summary": "Hybrid search over Mneme memory",
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SearchRequest"}}}
+        },
+        "responses": {
+          "200": {
+            "description": "Ranked search results",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/SearchResponse"}}}
+          },
+          "405": {"description": "Method not allowed"}
+        }
+      }
+    },
+    "/api/v1/query/timeline": {
+      "post": {
+        "tags": ["query"],
+        "summary": "Chronological timeline query",
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/TimelineRequest"}}}
+        },
+        "responses": {
+          "200": {
+            "description": "Timeline points ordered ascending by sequence",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/TimelineResponse"}}}
+          },
+          "405": {"description": "Method not allowed"}
+        }
+      }
+    },
+    "/api/v1/visualizations/graph": {
+      "post": {
+        "tags": ["visualizations"],
+        "summary": "Graph projection for query results",
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/GraphRequest"}}}
+        },
+        "responses": {
+          "200": {
+            "description": "Nodes and edges derived from search hits",
+            "content": {"application/json": {"schema": {"$ref": "#/components/schemas/GraphResponse"}}}
+          },
+          "405": {"description": "Method not allowed"}
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchRequest": {
+        "type": "object",
+        "description": "Filter surface for hybrid search. The Python reference runtime honors every filter; the Go runtime currently applies query, branch_name, entity_ids, and top_k.",
+        "properties": {
+          "query": {"type": ["string", "null"]},
+          "branch_name": {"type": "string", "default": "main"},
+          "snapshot_id": {"type": ["string", "null"]},
+          "subject_scope": {"type": ["string", "null"]},
+          "owner_subject_id": {"type": ["string", "null"]},
+          "participant_subject_ids": {"type": "array", "items": {"type": "string"}},
+          "entity_ids": {"type": "array", "items": {"type": "string"}},
+          "object_ids": {"type": "array", "items": {"type": "string"}},
+          "object_types": {"type": "array", "items": {"type": "string"}},
+          "cognitive_profile_id": {"type": ["string", "null"]},
+          "memory_types": {"type": "array", "items": {"type": "string"}},
+          "epistemic_status": {"type": ["string", "null"]},
+          "contradiction_status": {"type": ["string", "null"]},
+          "retention_states": {"type": ["array", "null"], "items": {"type": "string"}},
+          "modes": {"type": "array", "items": {"type": "string"}, "default": ["structured", "lexical", "semantic", "relation"]},
+          "top_k": {"type": "integer", "default": 20},
+          "candidate_limit": {"type": ["integer", "null"]},
+          "include_explanations": {"type": "boolean", "default": false}
+        }
+      },
+      "SearchResponse": {
+        "type": "object",
+        "properties": {"items": {"type": "array", "items": {"$ref": "#/components/schemas/SearchResultItem"}}},
+        "required": ["items"]
+      },
+      "SearchResultItem": {
+        "type": "object",
+        "properties": {
+          "commit": {"$ref": "#/components/schemas/CommitSummary"},
+          "score": {"type": "number"},
+          "matched_modes": {"type": "array", "items": {"type": "string"}},
+          "explanation": {"oneOf": [{"$ref": "#/components/schemas/SearchExplanationSummary"}, {"type": "null"}]}
+        },
+        "required": ["commit", "score", "matched_modes", "explanation"]
+      },
+      "SearchExplanationSummary": {
+        "type": "object",
+        "description": "Populated only by runtimes with explanation support (Python). The Go runtime returns null.",
+        "properties": {
+          "matched_modes": {"type": "array", "items": {"type": "string"}},
+          "score_breakdown": {"type": "object", "additionalProperties": {"type": "number"}},
+          "matched_filters": {"type": "object"},
+          "reasons": {"type": "array", "items": {"type": "string"}},
+          "lineage": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "CommitSummary": {
+        "type": "object",
+        "description": "Language-neutral commit projection. created_at and retention_state are defaulted by runtimes that do not yet track them (Go returns \"\" and \"active\").",
+        "properties": {
+          "commit_id": {"type": "string"},
+          "sequence": {"type": "integer"},
+          "memory_type": {"type": "string"},
+          "branch_name": {"type": "string"},
+          "created_at": {"type": "string"},
+          "retention_state": {"type": "string"},
+          "payload": {"type": "object"},
+          "metadata": {"type": "object"}
+        },
+        "required": ["commit_id", "sequence", "memory_type", "branch_name", "created_at", "retention_state", "payload", "metadata"]
+      },
+      "TimelineRequest": {
+        "type": "object",
+        "properties": {
+          "branch_name": {"type": "string", "default": "main"},
+          "snapshot_id": {"type": ["string", "null"]},
+          "subject_scope": {"type": ["string", "null"]},
+          "owner_subject_id": {"type": ["string", "null"]},
+          "participant_subject_ids": {"type": "array", "items": {"type": "string"}},
+          "entity_ids": {"type": "array", "items": {"type": "string"}},
+          "object_ids": {"type": "array", "items": {"type": "string"}},
+          "object_types": {"type": "array", "items": {"type": "string"}},
+          "memory_types": {"type": "array", "items": {"type": "string"}},
+          "epistemic_status": {"type": ["string", "null"]},
+          "contradiction_status": {"type": ["string", "null"]},
+          "retention_states": {"type": ["array", "null"], "items": {"type": "string"}},
+          "limit": {"type": "integer", "default": 100}
+        }
+      },
+      "TimelineResponse": {
+        "type": "object",
+        "properties": {"items": {"type": "array", "items": {"$ref": "#/components/schemas/TimelinePoint"}}},
+        "required": ["items"]
+      },
+      "TimelinePoint": {
+        "type": "object",
+        "description": "Flat chronological point. Not nested under a commit object.",
+        "properties": {
+          "commit_id": {"type": "string"},
+          "sequence": {"type": "integer"},
+          "memory_type": {"type": "string"},
+          "branch_name": {"type": "string"},
+          "created_at": {"type": "string"},
+          "label": {"type": "string"},
+          "metadata": {"type": "object"}
+        },
+        "required": ["commit_id", "sequence", "memory_type", "branch_name", "created_at", "label", "metadata"]
+      },
+      "GraphRequest": {
+        "allOf": [{"$ref": "#/components/schemas/SearchRequest"}],
+        "description": "Identical filter surface to SearchRequest; include_explanations defaults to true."
+      },
+      "GraphResponse": {
+        "type": "object",
+        "properties": {
+          "nodes": {"type": "array", "items": {"$ref": "#/components/schemas/GraphNode"}},
+          "edges": {"type": "array", "items": {"$ref": "#/components/schemas/GraphEdge"}}
+        },
+        "required": ["nodes", "edges"]
+      },
+      "GraphNode": {
+        "type": "object",
+        "description": "kind is one of commit, subject, entity, object. The Go runtime emits commit and entity nodes; subject and object nodes require explanation support (Python).",
+        "properties": {
+          "id": {"type": "string"},
+          "label": {"type": "string"},
+          "kind": {"type": "string"},
+          "metadata": {"type": "object"}
+        },
+        "required": ["id", "label", "kind", "metadata"]
+      },
+      "GraphEdge": {
+        "type": "object",
+        "description": "kind is one of subject_link, entity_link, object_link, relation. The Go runtime emits entity_link edges from commit entity links.",
+        "properties": {
+          "source": {"type": "string"},
+          "target": {"type": "string"},
+          "label": {"type": "string"},
+          "kind": {"type": "string"},
+          "metadata": {"type": "object"}
+        },
+        "required": ["source", "target", "label", "kind", "metadata"]
+      }
+    }
+  }
+}
