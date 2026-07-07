@@ -84,5 +84,3 @@ reranker is never applied and `offline` is the default extractor).
 
 - [../api-examples.md](../api-examples.md) - worked Python usage examples
 - [../api-examples-context.md](../api-examples-context.md) - context-assembly examples
-- [../Mneme-architecture.md](../Mneme-architecture.md) - architecture hub
-- [../architecture/protocol-contract-harness.md](../architecture/protocol-contract-harness.md) - how the contract is tested across runtimes
