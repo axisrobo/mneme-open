@@ -13,6 +13,10 @@ Mneme exposes a JSON-RPC 2.0 interface over stdio for local memory operations --
 
 When `Mneme_GO_PEBBLE_PATH` is set, the Go runtime switches from in-memory storage to a persistent Pebble database at the given path. The Python runtime always uses a local SQLite database.
 
+**JSON-RPC over HTTP**
+
+In addition to stdio, the same JSON-RPC 2.0 interface is now available over HTTP at `POST /api/v1/jsonrpc`, served by both the Python REST service (`services/python-rest-api`) and the Go HTTP server. The HTTP request body is a single JSON-RPC request object and the response is the matching JSON-RPC response envelope; JSON-RPC-level errors are returned as an `error` object with HTTP status `200`. The HTTP transport exposes the full method set documented below — a superset of the gRPC surface — so any `mneme.*` method callable over stdio is also callable over HTTP. See [`./rest.md`](./rest.md) for the REST service details.
+
 ## Envelope
 
 Every message conforms to the `mneme.jsonrpc.v1` schema (`contracts/mneme.jsonrpc.v1.schema.json`).

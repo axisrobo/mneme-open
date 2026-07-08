@@ -26,11 +26,24 @@ All endpoints are mounted under the base path `/api/v1`. The REST API is a Pytho
 | `POST` | `/api/v1/query/entity/evolve` | Evolve entity understanding from recent episodes |
 | `GET` | `/api/v1/query/connectors/status` | Connector sync status |
 | `POST` | `/api/v1/visualizations/graph` | Graph projection for query results |
+| `POST` | `/api/v1/jsonrpc` | JSON-RPC 2.0 over HTTP (full Mneme method set) |
+| `POST` | `/api/v1/memory/episode` | Add an episode memory |
+| `POST` | `/api/v1/memory/fact` | Add a temporal fact |
+| `POST` | `/api/v1/memory/commit` | Append a typed memory commit |
+| `POST` | `/api/v1/memory/fact/invalidate` | Invalidate an existing fact |
+| `POST` | `/api/v1/subjects` | Create or update a subject |
+| `POST` | `/api/v1/entities` | Create or update an entity |
+| `POST` | `/api/v1/branches` | Create a branch |
+| `POST` | `/api/v1/branches/merge` | Merge a source branch into a target branch |
+| `POST` | `/api/v1/extract` | Extract derived commits from a stored episode |
+| `POST` | `/api/v1/commits/retention` | Set the retention state of a commit |
 
 All endpoints are confirmed present in the router source files:
 - `routers/health.py` — `/live`, `/ready`, `/health`, `/metrics`
 - `routers/query.py` — `/search`, `/timeline`, `/context`, `/entity/evolve`, `/connectors/status`
 - `routers/visualization.py` — `/graph`
+- `routers/rpc.py` — `/jsonrpc`
+- `routers/write.py` — `/memory/episode`, `/memory/fact`, `/memory/commit`, `/memory/fact/invalidate`, `/subjects`, `/entities`, `/branches`, `/branches/merge`, `/extract`, `/commits/retention`
 
 ## Request / response models
 
@@ -124,7 +137,7 @@ The service responds with ranked items:
         "created_at": "2026-04-06T09:00:00+08:00",
         "retention_state": "active",
         "payload": {
-          "title": {"zh": "项目启动会议完成范围确认", "en": "Kickoff meeting confirms project scope"}
+          "title": {"zh": "Xiangmu qidong huiyi wancheng fanwei queren", "en": "Kickoff meeting confirms project scope"}
         },
         "metadata": {}
       },
@@ -173,9 +186,66 @@ The response includes `nodes` and `edges` arrays suitable for rendering:
 }
 ```
 
+## JSON-RPC over HTTP
+
+In addition to the query and write REST routes, the service exposes the full Mneme JSON-RPC method set over HTTP at `POST /api/v1/jsonrpc`. The same endpoint is also served by the Go HTTP server, so a single JSON-RPC-over-HTTP contract works against either runtime.
+
+The request body is a standard JSON-RPC 2.0 request object, and the response is the corresponding JSON-RPC 2.0 response envelope. This transport exposes every `mneme.*` method — including `build_context`, the `capture_*` session methods, and the `reconcile_*` maintenance methods — not just the query and write routes described above. JSON-RPC-level failures are returned as a JSON-RPC `error` object with HTTP status `200` (the HTTP layer only reports transport-level problems). See [`./jsonrpc.md`](./jsonrpc.md) for the complete method reference.
+
+```bash
+curl -s -X POST http://localhost:8000/api/v1/jsonrpc \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc": "2.0", "id": 1, "method": "mneme.build_context", "params": {"query": "contract dispute status", "branch_name": "main", "budget": 800, "limit": 10}}'
+```
+
+The response is a JSON-RPC envelope:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": { "context_snippet": "...", "sources": ["...", "..."] }
+}
+```
+
+## Write endpoints
+
+The Python FastAPI service also exposes ten `POST` write routes (`routers/write.py`). These are Python-only; the Go HTTP server offers writes through the JSON-RPC endpoint above.
+
+| Method | Path | Body model | Response | Description |
+|--------|------|------------|----------|-------------|
+| `POST` | `/api/v1/memory/episode` | `AddEpisodeRequest` (`content` required) | `CommitSummary` | Record a raw episode of agent interaction. |
+| `POST` | `/api/v1/memory/fact` | `AddFactRequest` (`fact_id`, `subject_id`, `predicate`, `object_value` required) | `CommitSummary` | Assert a temporal fact about a subject. |
+| `POST` | `/api/v1/memory/commit` | `CommitRequest` (`memory_type` required; `payload` object) | `CommitSummary` | Append a typed memory commit. |
+| `POST` | `/api/v1/memory/fact/invalidate` | `InvalidateFactRequest` (`fact_id`, `invalidated_at` required) | `CommitSummary` | Mark a fact as invalidated (non-destructive). |
+| `POST` | `/api/v1/subjects` | `UpsertSubjectRequest` (`subject_id`, `subject_type` required) | `SubjectSummary` | Create or update a subject. |
+| `POST` | `/api/v1/entities` | `UpsertEntityRequest` (`entity_id`, `entity_type` required) | `EntitySummary` | Create or update an entity. |
+| `POST` | `/api/v1/branches` | `CreateBranchRequest` (`branch_name` required) | `BranchHeadSummary` | Create a branch, optionally from an existing branch. |
+| `POST` | `/api/v1/branches/merge` | `MergeBranchRequest` (`source_branch` required; `strategy` one of `manual`/`ours`/`theirs`) | `CommitSummary` | Merge a source branch into a target branch. |
+| `POST` | `/api/v1/extract` | `ExtractEpisodeRequest` (`episode_commit_id` required; `provider` default `offline`) | `ExtractionRun` | Extract derived commits from a stored episode. |
+| `POST` | `/api/v1/commits/retention` | `SetRetentionStateRequest` (`commit_id`, `retention_state` required) | `CommitSummary` | Set the retention state of a commit. |
+
+Commit-producing routes return a `CommitSummary` (see the model above); the subject, entity, and branch routes return small summary objects (`SubjectSummary`, `EntitySummary`, `BranchHeadSummary`). The `extract` route's `provider` defaults to `offline` (the deterministic OSS extractor); `llm` and `openai` require the Enterprise Edition.
+
+### Add an episode
+
+```bash
+curl -s -X POST http://localhost:8000/api/v1/memory/episode \
+  -H "Content-Type: application/json" \
+  -d '{"branch_name": "main", "content": "User asked to fix the login form; found a typo in the placeholder.", "episode_type": "conversation", "source": "claude-code"}'
+```
+
+### Create a branch
+
+```bash
+curl -s -X POST http://localhost:8000/api/v1/branches \
+  -H "Content-Type: application/json" \
+  -d '{"branch_name": "feature/auth-refactor", "from_branch": "main"}'
+```
+
 ## Contract status
 
-The OpenAPI contract at `contracts/mneme.rest.v1-draft.openapi.json` currently documents four endpoints: `/api/v1/health`, `/api/v1/query/search`, `/api/v1/query/timeline`, and `/api/v1/visualizations/graph`. The remaining six endpoints (`/live`, `/ready`, `/metrics`, `/query/context`, `/query/entity/evolve`, `/query/connectors/status`) exist in the Python service router source but are not yet described in the v1-draft contract.
+The OpenAPI contract at `contracts/mneme.rest.v1-draft.openapi.json` documents the health, query, and graph endpoints (`/api/v1/health`, `/api/v1/query/search`, `/api/v1/query/timeline`, `/api/v1/visualizations/graph`) and now also covers the JSON-RPC-over-HTTP endpoint (`/api/v1/jsonrpc`) and all ten write endpoints (`/api/v1/memory/episode`, `/api/v1/memory/fact`, `/api/v1/memory/commit`, `/api/v1/memory/fact/invalidate`, `/api/v1/subjects`, `/api/v1/entities`, `/api/v1/branches`, `/api/v1/branches/merge`, `/api/v1/extract`, `/api/v1/commits/retention`). The remaining health/liveness and derived query endpoints (`/live`, `/ready`, `/metrics`, `/query/context`, `/query/entity/evolve`, `/query/connectors/status`) exist in the Python service router source but are not yet described in the v1-draft contract.
 
 ## Edition notes
 
