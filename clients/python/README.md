@@ -62,6 +62,42 @@ The client exposes one method per gRPC RPC. The full surface is the 17
 `set_retention_state`, and `verify_commit_index`. Other operations arrive via
 future transports (REST, JSON-RPC).
 
+## HTTP transport
+
+Alongside the gRPC client, `MnemeHttpClient` (sync) and `AsyncMnemeHttpClient`
+(async) speak JSON-RPC over HTTP (`POST /api/v1/jsonrpc`). They are stdlib-only
+(no extra dependencies) and expose the FULL ~29-method surface — including
+operations not on the typed gRPC client, such as `build_context`, `get_context`,
+`ingest`, `evolve_entity`, and the `capture_*`/`session_*` methods. Each method
+is called as `client.<name>(**params)` and returns the JSON-RPC `result`.
+
+```python
+from mneme_client import MnemeHttpClient
+
+client = MnemeHttpClient("http://localhost:8000")
+commit = client.add_episode(branch_name="main", content="shipped the client")
+print(commit["commit_id"])
+
+context = client.build_context(branch_name="main", query="client")
+client.capture_decision(branch_name="main", summary="use JSON-RPC transport")
+```
+
+Async usage mirrors the sync surface:
+
+```python
+import asyncio
+from mneme_client import AsyncMnemeHttpClient
+
+async def main():
+    client = AsyncMnemeHttpClient("http://localhost:8000")
+    results = await client.search_memory(branch_name="main", query="client", top_k=5)
+    print(len(results))
+
+asyncio.run(main())
+```
+
+The gRPC `MnemeClient`/`AsyncMnemeClient` remain for the typed 17-RPC surface.
+
 ## Regenerating stubs
 
 The generated stubs under `src/mneme_client/_generated/` are committed. To
