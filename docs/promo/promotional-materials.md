@@ -1,60 +1,54 @@
-# Mneme-open — Promotional Materials
+﻿# Mneme-open 鈥?Promotional Materials
 
 Ready-to-post copy for each platform. Replace `{LINK}` with
 `https://github.com/axisrobo/mneme-open`.
 
 ---
 
-## X (Twitter) — 3 posts
+## X (Twitter) 鈥?3 posts
 
-### Post 1 — product launch (main)
+### Post 1 鈥?product launch (main)
 
-你的 AI coding agent 记不住上次修了什么 bug？每次切任务都要重新翻代码、猜上下文？
+浣犵殑 AI coding agent 璁颁笉浣忎笂娆′慨浜嗕粈涔?bug锛熸瘡娆″垏浠诲姟閮借閲嶆柊缈讳唬鐮併€佺寽涓婁笅鏂囷紵
 
-Mneme 是个开源 Agent 认知运行时，给 LLM Agent 加上长期记忆、知识图谱、工作区状态——跨 session 保持上下文。
-
-✅ Python / TypeScript / Go / CLI 四个客户端
-✅ MCP / JSON-RPC / REST / gRPC 四种协议
-✅ 14 种认知记忆类型（事实、决策、约束、模拟、知识……）
-✅ Apache-2.0，预编译二进制直接下载
-
+Mneme 鏄釜寮€婧?Agent 璁ょ煡杩愯鏃讹紝缁?LLM Agent 鍔犱笂闀挎湡璁板繂銆佺煡璇嗗浘璋便€佸伐浣滃尯鐘舵€佲€斺€旇法 session 淇濇寔涓婁笅鏂囥€?
+鉁?Python / TypeScript / Go / CLI 鍥涗釜瀹㈡埛绔?鉁?MCP / JSON-RPC / REST / gRPC 鍥涚鍗忚
+鉁?14 绉嶈鐭ヨ蹇嗙被鍨嬶紙浜嬪疄銆佸喅绛栥€佺害鏉熴€佹ā鎷熴€佺煡璇嗏€︹€︼級
+鉁?Apache-2.0锛岄缂栬瘧浜岃繘鍒剁洿鎺ヤ笅杞?
 GitHub: {LINK}
 
 #AgentMemory #MCP #AIEngineering
 
 ---
 
-### Post 2 — developer hook
+### Post 2 鈥?developer hook
 
-Agent 每次新 session 都是从零开始。你喂给它 prompt 上下文，但不持久。关了 IDE，它就忘了。
+Agent 姣忔鏂?session 閮芥槸浠庨浂寮€濮嬨€備綘鍠傜粰瀹?prompt 涓婁笅鏂囷紝浣嗕笉鎸佷箙銆傚叧浜?IDE锛屽畠灏卞繕浜嗐€?
+Mneme 璁?Agent 鍦ㄦ瘡娆′細璇濈粨鏉熸椂鑷姩鍐欏洖锛?- 鏀逛簡鍝簺鏂囦欢
+- 鍋氫簡鍝簺鍐崇瓥
+- 纰板埌浜嗕粈涔堝潙
+- 鍝簺浜嬪疄鏄暱鏈熸湁鏁堢殑
 
-Mneme 让 Agent 在每次会话结束时自动写回：
-- 改了哪些文件
-- 做了哪些决策
-- 碰到了什么坑
-- 哪些事实是长期有效的
-
-下次 session 开始，Agent 先查 Mneme 再查文件系统。上下文不是 prompt，是记忆。
-
+涓嬫 session 寮€濮嬶紝Agent 鍏堟煡 Mneme 鍐嶆煡鏂囦欢绯荤粺銆備笂涓嬫枃涓嶆槸 prompt锛屾槸璁板繂銆?
 {LLINK}
 
 ---
 
-### Post 3 — short (适合随手转发)
+### Post 3 鈥?short (閫傚悎闅忔墜杞彂)
 
-Mneme：给你的 AI Agent 装上长期记忆 🧠
-→ {LINK}
-14 种记忆类型 | 4 种协议 | 3 种语言 SDK | Apache-2.0
+Mneme锛氱粰浣犵殑 AI Agent 瑁呬笂闀挎湡璁板繂 馃
+鈫?{LINK}
+14 绉嶈蹇嗙被鍨?| 4 绉嶅崗璁?| 3 绉嶈瑷€ SDK | Apache-2.0
 
 ---
 
-## LinkedIn — 2 posts
+## LinkedIn 鈥?2 posts
 
-### Post 1 — product launch (英语)
+### Post 1 鈥?product launch (鑻辫)
 
 Mneme is now open-source (Apache-2.0): an agent cognition runtime that gives
 AI coding agents persistent long-term memory, knowledge graphs, and workspace
-state — across sessions.
+state 鈥?across sessions.
 
 What it does:
 - Agents call `mneme.search_memory()` before reading files
@@ -62,7 +56,7 @@ What it does:
 - They `session_end()` with a summary, changed files, and decisions
 - Next session, the agent knows the project state before a single file read
 
-It speaks MCP (Model Context Protocol), JSON-RPC, REST, and gRPC — works
+It speaks MCP (Model Context Protocol), JSON-RPC, REST, and gRPC 鈥?works
 with OpenCode, Claude Code, Codex, and any MCP-compatible agent.
 
 15K+ lines of client SDKs across Python, TypeScript, and Go, plus CLI tools,
@@ -76,204 +70,145 @@ replaceable storage backends, and hybrid search (lexical + semantic + relation
 
 ---
 
-### Post 2 — 中文版（适合国内 LinkedIn 和公众号分段发）
+### Post 2 鈥?涓枃鐗堬紙閫傚悎鍥藉唴 LinkedIn 鍜屽叕浼楀彿鍒嗘鍙戯級
 
-**Mneme —— 开源的 Agent 认知运行时**
+**Mneme 鈥斺€?寮€婧愮殑 Agent 璁ょ煡杩愯鏃?*
 
-AI 编程助手越来越强，但有一个根本问题没解决：记忆。
-每次新会话，Agent 都是"失忆"的——它不知道自己上次改了哪些文件、做过什么决策、踩过什么坑。
+AI 缂栫▼鍔╂墜瓒婃潵瓒婂己锛屼絾鏈変竴涓牴鏈棶棰樻病瑙ｅ喅锛氳蹇嗐€?姣忔鏂颁細璇濓紝Agent 閮芥槸"澶卞繂"鐨勨€斺€斿畠涓嶇煡閬撹嚜宸变笂娆℃敼浜嗗摢浜涙枃浠躲€佸仛杩囦粈涔堝喅绛栥€佽俯杩囦粈涔堝潙銆?
+Mneme 瑙ｅ喅浜嗚繖涓棶棰樸€傚畠鏄竴涓笓闂ㄤ负 AI Agent 璁捐鐨勯暱鏈熻蹇嗙郴缁熴€?
+宸ヤ綔鍘熺悊寰堢畝鍗曪細
+1. 浼氳瘽寮€濮?鈫?Agent 鍏堟煡 Mneme锛屾悳绱㈢浉鍏冲巻鍙?2. 宸ヤ綔杩囩▼ 鈫?Agent 璁板綍鍐崇瓥锛坈apture_decision锛夈€侀敊璇紙capture_error锛夈€佷簨瀹烇紙add_fact锛?3. 浼氳瘽缁撴潫 鈫?Agent 鍐欏叆鎽樿銆佸彉鏇存枃浠跺垪琛ㄣ€佸叧閿喅绛?4. 涓嬫浼氳瘽 鈫?涓婁笅鏂囪嚜鍔ㄦ仮澶嶏紝Agent 鐭ラ亾浠庡摢寮€濮?
+Mneme 鏀寔 14 绉嶈鐭ヨ蹇嗙被鍨嬶紝涓嶅彧鏄?鏂囨湰瀛樺偍"鈥斺€斿畠鐞嗚В浜嬩欢銆佺煡璇嗐€佺粡楠屻€佹ā鎷熴€佹儏缁€佹剰鍥俱€佷俊蹇点€佷换鍔°€佸亸濂姐€佸伐浣滃尯鐘舵€併€佸喅绛栥€佺害鏉熷拰鍏崇郴銆?
+鍐呯疆 MCP Server锛屾敮鎸?OpenCode / Claude Code / Codex 绛変富娴?AI 缂栫爜宸ュ叿鍗虫彃鍗崇敤銆?
+寮€婧愬崗璁細Apache-2.0
+GitHub锛歿LLINK}
 
-Mneme 解决了这个问题。它是一个专门为 AI Agent 设计的长期记忆系统。
-
-工作原理很简单：
-1. 会话开始 → Agent 先查 Mneme，搜索相关历史
-2. 工作过程 → Agent 记录决策（capture_decision）、错误（capture_error）、事实（add_fact）
-3. 会话结束 → Agent 写入摘要、变更文件列表、关键决策
-4. 下次会话 → 上下文自动恢复，Agent 知道从哪开始
-
-Mneme 支持 14 种认知记忆类型，不只是"文本存储"——它理解事件、知识、经验、模拟、情绪、意图、信念、任务、偏好、工作区状态、决策、约束和关系。
-
-内置 MCP Server，支持 OpenCode / Claude Code / Codex 等主流 AI 编码工具即插即用。
-
-开源协议：Apache-2.0
-GitHub：{LLINK}
-
-#开源 #AI #AgentMemory #MCP #认知架构
+#寮€婧?#AI #AgentMemory #MCP #璁ょ煡鏋舵瀯
 
 ---
 
-## Weibo（微博）—— 3 篇
+## Weibo锛堝井鍗氾級鈥斺€?3 绡?
+### 寰崥 1锛堜骇鍝佷粙缁嶏級
 
-### 微博 1（产品介绍）
+缁欎綘鐨?AI Agent 瑁呬笂"闀挎湡璁板繂" 馃
 
-给你的 AI Agent 装上"长期记忆" 🧠
+Mneme 寮€婧愪簡鈥斺€斾竴涓笓闂ㄤ负 AI 缂栫▼ Agent 璁捐鐨勮鐭ヨ繍琛屾椂銆傛敮鎸佽蹇嗗瓨鍌ㄣ€佺煡璇嗗浘璋便€佸伐浣滃尯鐘舵€侊紝璺?session 淇濇寔涓婁笅鏂囥€?
+鉁?Python / TypeScript / Go / CLI 鍏ㄦ敮鎸?鉁?MCP / JSON-RPC / REST / gRPC
+鉁?14 绉嶈鐭ヨ蹇嗙被鍨?鉁?Apache-2.0 鍗忚锛岄缂栬瘧浜岃繘鍒?
+GitHub锛歿LINK}
 
-Mneme 开源了——一个专门为 AI 编程 Agent 设计的认知运行时。支持记忆存储、知识图谱、工作区状态，跨 session 保持上下文。
-
-✅ Python / TypeScript / Go / CLI 全支持
-✅ MCP / JSON-RPC / REST / gRPC
-✅ 14 种认知记忆类型
-✅ Apache-2.0 协议，预编译二进制
-
-GitHub：{LINK}
-
-#AI工具 #开源 #Agent开发 #程序员效率
-
+#AI宸ュ叿 #寮€婧?#Agent寮€鍙?#绋嬪簭鍛樻晥鐜?
 ---
 
-### 微博 2（场景化）
-
-AI 编程助手每次新 session 都"失忆"？
-
-Mneme 让 Agent 学会记住：
-- 上次改了哪些文件 → 不用重新翻代码
-- 做了哪些决策 → 不用再讨论一遍
-- 踩了哪些坑 → 不用再 debug 一次
-- 项目有哪些约束 → 改动前自动提醒
-
-关了 IDE，记忆还在。下次打开，上下文自动恢复。
-
+### 寰崥 2锛堝満鏅寲锛?
+AI 缂栫▼鍔╂墜姣忔鏂?session 閮?澶卞繂"锛?
+Mneme 璁?Agent 瀛︿細璁颁綇锛?- 涓婃鏀逛簡鍝簺鏂囦欢 鈫?涓嶇敤閲嶆柊缈讳唬鐮?- 鍋氫簡鍝簺鍐崇瓥 鈫?涓嶇敤鍐嶈璁轰竴閬?- 韪╀簡鍝簺鍧?鈫?涓嶇敤鍐?debug 涓€娆?- 椤圭洰鏈夊摢浜涚害鏉?鈫?鏀瑰姩鍓嶈嚜鍔ㄦ彁閱?
+鍏充簡 IDE锛岃蹇嗚繕鍦ㄣ€備笅娆℃墦寮€锛屼笂涓嬫枃鑷姩鎭㈠銆?
 {LLINK}
 
-#开发工具 #AI编程 #效率提升
+#寮€鍙戝伐鍏?#AI缂栫▼ #鏁堢巼鎻愬崌
 
 ---
 
-### 微博 3（极简，适合配图转发）
-
-AI Agent 的三件套：
-1️⃣ 推理（LLM）
-2️⃣ 工具（Function Call）
-3️⃣ 记忆（Mneme）← 今天刚开源
-
-Apache-2.0，GitHub 见 👉 {LINK}
+### 寰崥 3锛堟瀬绠€锛岄€傚悎閰嶅浘杞彂锛?
+AI Agent 鐨勪笁浠跺锛?1锔忊儯 鎺ㄧ悊锛圠LM锛?2锔忊儯 宸ュ叿锛團unction Call锛?3锔忊儯 璁板繂锛圡neme锛夆啇 浠婂ぉ鍒氬紑婧?
+Apache-2.0锛孏itHub 瑙?馃憠 {LINK}
 
 ---
 
-## CSDN（技术博客）—— 中文长文
+## CSDN锛堟妧鏈崥瀹級鈥斺€?涓枃闀挎枃
 
-### 标题：AI编程Agent缺的不是智商，是记忆——Mneme开源认知运行时介绍
+### 鏍囬锛欰I缂栫▼Agent缂虹殑涓嶆槸鏅哄晢锛屾槸璁板繂鈥斺€擬neme寮€婧愯鐭ヨ繍琛屾椂浠嬬粛
 
-**导语：**
-AI 编程助手越来越强，但一个根本问题始终存在：每次新会话，Agent 都是"失忆"的。Mneme 是一个专门为 AI Agent 设计的长期记忆系统，今天正式开源（Apache-2.0）。本文介绍它的设计理念、核心能力和使用方式。
+**瀵艰锛?*
+AI 缂栫▼鍔╂墜瓒婃潵瓒婂己锛屼絾涓€涓牴鏈棶棰樺缁堝瓨鍦細姣忔鏂颁細璇濓紝Agent 閮芥槸"澶卞繂"鐨勩€侻neme 鏄竴涓笓闂ㄤ负 AI Agent 璁捐鐨勯暱鏈熻蹇嗙郴缁燂紝浠婂ぉ姝ｅ紡寮€婧愶紙Apache-2.0锛夈€傛湰鏂囦粙缁嶅畠鐨勮璁＄悊蹇点€佹牳蹇冭兘鍔涘拰浣跨敤鏂瑰紡銆?
+锛堟鏂囩害 800-1000 瀛楋紝閫傚悎 CSDN 鎶€鏈崥瀹㈤鏍硷級
 
-（正文约 800-1000 字，适合 CSDN 技术博客风格）
+**姝ｆ枃锛?*
 
-**正文：**
+**涓€銆丄gent 鐨?澶卞繂鐥?**
 
-**一、Agent 的"失忆症"**
+濡傛灉浣犵敤杩?AI 缂栫▼宸ュ叿锛圤penCode銆丆laude Code銆丆odex 绛夛級锛屼竴瀹氱啛鎮夎繖涓祦绋嬶細
 
-如果你用过 AI 编程工具（OpenCode、Claude Code、Codex 等），一定熟悉这个流程：
+1. 鎵撳紑涓€涓柊 session
+2. 鐢ㄨ嚜鐒惰瑷€鎻忚堪褰撳墠浠诲姟
+3. Agent 寮€濮嬫绱㈡枃浠躲€佺悊瑙ｉ」鐩粨鏋?4. 宸ヤ綔瀹屾垚锛屽叧闂?session
+5. 涓嬫鍐嶅紑鈥斺€擜gent 鍙?蹇樹簡"涓€鍒囷紝浠庡ご寮€濮?
+杩欐湰璐ㄤ笂鏄竴涓?*涓婁笅鏂囨柇瑁?*鐨勯棶棰樸€侫gent 鍦?session 鍐呯殑涓婁笅鏂囩獥鍙ｆ槸鏈夐檺鐨勶紝鑰岃法 session 鐨勪笂涓嬫枃鍒欐槸瀹屽叏涓嶅瓨鍦ㄧ殑銆?
+Mneme 瑙ｅ喅鐨勫氨鏄繖涓?璺?session 涓婁笅鏂?闂銆?
+**浜屻€丮neme 鏄粈涔?*
 
-1. 打开一个新 session
-2. 用自然语言描述当前任务
-3. Agent 开始检索文件、理解项目结构
-4. 工作完成，关闭 session
-5. 下次再开——Agent 又"忘了"一切，从头开始
+Mneme锛堟潵鑷笇鑵婅 渭谓萎渭畏锛岃蹇嗭級鏄竴涓?*Agent 璁ょ煡杩愯鏃?*銆傚畠鎻愪緵锛?
+- **闀挎湡璁板繂瀛樺偍**锛欰gent 鍙互鎶婃瘡娆″伐浣滅殑鍐呭銆佸喅绛栥€侀敊璇€佸彂鐜版寔涔呭寲
+- **鐭ヨ瘑鍥捐氨**锛氭ā鍧椾緷璧栥€佹枃浠跺叧绯汇€侀」鐩害鏉熶互缁撴瀯鍖栨柟寮忓瓨鍌?- **宸ヤ綔鍖虹姸鎬?*锛氬綋鍓嶆椿璺冩枃浠躲€佸緟瀹氬喅绛栥€佹祴璇曠姸鎬佺瓑涓存椂涓婁笅鏂?- **娣峰悎妫€绱?*锛氳瘝姹?+ 璇箟 + 鍏崇郴 + 鏃堕棿鍥涚淮鎼滅储
 
-这本质上是一个**上下文断裂**的问题。Agent 在 session 内的上下文窗口是有限的，而跨 session 的上下文则是完全不存在的。
-
-Mneme 解决的就是这个"跨 session 上下文"问题。
-
-**二、Mneme 是什么**
-
-Mneme（来自希腊语 μνήμη，记忆）是一个**Agent 认知运行时**。它提供：
-
-- **长期记忆存储**：Agent 可以把每次工作的内容、决策、错误、发现持久化
-- **知识图谱**：模块依赖、文件关系、项目约束以结构化方式存储
-- **工作区状态**：当前活跃文件、待定决策、测试状态等临时上下文
-- **混合检索**：词汇 + 语义 + 关系 + 时间四维搜索
-
-它不是一个"文档数据库"，而是一个**认知模型**——它理解事件、知识、经验、模拟、情绪、意图、信念、过程、任务、偏好、决策、约束和关系等 14 种不同的记忆类型。
-
-**三、Agent 怎么用 Mneme**
+瀹冧笉鏄竴涓?鏂囨。鏁版嵁搴?锛岃€屾槸涓€涓?*璁ょ煡妯″瀷**鈥斺€斿畠鐞嗚В浜嬩欢銆佺煡璇嗐€佺粡楠屻€佹ā鎷熴€佹儏缁€佹剰鍥俱€佷俊蹇点€佽繃绋嬨€佷换鍔°€佸亸濂姐€佸喅绛栥€佺害鏉熷拰鍏崇郴绛?14 绉嶄笉鍚岀殑璁板繂绫诲瀷銆?
+**涓夈€丄gent 鎬庝箞鐢?Mneme**
 
 ```
-# 会话开始时——先查记忆
-Agent: mneme.search_memory(query="dark mode 上次改了什么")
+# 浼氳瘽寮€濮嬫椂鈥斺€斿厛鏌ヨ蹇?Agent: mneme.search_memory(query="dark mode 涓婃鏀逛簡浠€涔?)
 
-# 工作时——边做边记
-Agent: mneme.capture_decision(summary="用CSS变量实现主题切换", rationale="改动最小")
-Agent: mneme.add_fact("module:theme-provider", "implements", "CSS变量方案")
+# 宸ヤ綔鏃垛€斺€旇竟鍋氳竟璁?Agent: mneme.capture_decision(summary="鐢–SS鍙橀噺瀹炵幇涓婚鍒囨崲", rationale="鏀瑰姩鏈€灏?)
+Agent: mneme.add_fact("module:theme-provider", "implements", "CSS鍙橀噺鏂规")
 
-# 会话结束时——写回总结
+# 浼氳瘽缁撴潫鏃垛€斺€斿啓鍥炴€荤粨
 Agent: mneme.session_end(
-  summary="实现黑暗模式切换",
+  summary="瀹炵幇榛戞殫妯″紡鍒囨崲",
   changed_files=["ThemeProvider.tsx", "theme.css"],
-  decisions=["CSS变量方案"]
+  decisions=["CSS鍙橀噺鏂规"]
 )
 ```
 
-下次会话开始时，Agent 不需要你重新描述项目结构和任务背景——它已经从 Mneme 中恢复了上下文。
+涓嬫浼氳瘽寮€濮嬫椂锛孉gent 涓嶉渶瑕佷綘閲嶆柊鎻忚堪椤圭洰缁撴瀯鍜屼换鍔¤儗鏅€斺€斿畠宸茬粡浠?Mneme 涓仮澶嶄簡涓婁笅鏂囥€?
+**鍥涖€佹妧鏈灦鏋?*
 
-**四、技术架构**
+Mneme 閲囩敤 open-core 妯″紡锛?- **寮€鏀炬牳蹇冿紙Mneme-open锛?*锛氬鎴风 SDK锛圥ython/TypeScript/Go/CLI锛夈€佸崗璁绾︺€丄PI 鏂囨。銆侀缂栬瘧浜岃繘鍒?- **Enterprise Edition**锛歅ostgreSQL/PGVector 瀛樺偍鍚庣銆丩LM 閲嶆帓搴?鎻愬彇銆佸浘閲嶆帓銆佷簯杩炴帴鍣?
+鍐呯疆 MCP Server锛屾敮鎸?OpenCode銆丆laude Code銆丆odex 鍗虫彃鍗崇敤銆備篃鏀寔 JSON-RPC銆丷EST銆乬RPC 涓夌鍗忚銆?
+**浜斻€佸紑婧愪俊鎭?*
 
-Mneme 采用 open-core 模式：
-- **开放核心（Mneme-open）**：客户端 SDK（Python/TypeScript/Go/CLI）、协议契约、API 文档、预编译二进制
-- **Enterprise Edition**：PostgreSQL/PGVector 存储后端、LLM 重排序/提取、图重排、云连接器
-
-内置 MCP Server，支持 OpenCode、Claude Code、Codex 即插即用。也支持 JSON-RPC、REST、gRPC 三种协议。
-
-**五、开源信息**
-
-- 协议：Apache-2.0
+- 鍗忚锛欰pache-2.0
 - GitHub: {LINK}
-- 客户端支持：Python、TypeScript、Go
-- 预编译二进制：Windows、Linux、macOS（amd64/arm64）
-- 配套资料：SDK 文档、API 参考、Agent 集成指南、14 种记忆类型完整参考
-
+- 瀹㈡埛绔敮鎸侊細Python銆乀ypeScript銆丟o
+- 棰勭紪璇戜簩杩涘埗锛歐indows銆丩inux銆乵acOS锛坅md64/arm64锛?- 閰嶅璧勬枡锛歋DK 鏂囨。銆丄PI 鍙傝€冦€丄gent 闆嗘垚鎸囧崡銆?4 绉嶈蹇嗙被鍨嬪畬鏁村弬鑰?
 ---
 
-## 公众号（微信）—— 4 段式推文
+## 鍏紬鍙凤紙寰俊锛夆€斺€?4 娈靛紡鎺ㄦ枃
 
-### 标题：给你的 AI 编程助手装上一个"长期记忆"—— Mneme 开源
+### 鏍囬锛氱粰浣犵殑 AI 缂栫▼鍔╂墜瑁呬笂涓€涓?闀挎湡璁板繂"鈥斺€?Mneme 寮€婧?
+**锛堢 1 娈?鈥斺€?鐥涚偣锛?*
 
-**（第 1 段 —— 痛点）**
+鐢?AI 鍐欎唬鐮佺殑浜洪兘鏈変竴涓叡鍚岀殑浣撻獙锛欰gent 鍦ㄥ崟涓?session 閲屽緢寮猴紝浣嗗彧瑕佸叧鎺夌獥鍙ｏ紝涓嬫鎵撳紑鈥斺€斿畠浠€涔堥兘涓嶈寰椾簡銆備綘鍙堣閲嶆柊瑙ｉ噴椤圭洰缁撴瀯銆佹弿杩颁换鍔¤儗鏅€佹彁閱掑畠涓婃鍋氬埌鍝簡銆?
+杩欎笉鏄?Agent 涓嶅鑱槑锛岃€屾槸瀹冪己涔?*闀挎湡璁板繂**銆?
+**锛堢 2 娈?鈥斺€?浜у搧锛?*
 
-用 AI 写代码的人都有一个共同的体验：Agent 在单个 session 里很强，但只要关掉窗口，下次打开——它什么都不记得了。你又要重新解释项目结构、描述任务背景、提醒它上次做到哪了。
+Mneme 灏辨槸涓撻棬瑙ｅ喅杩欎釜闂鐨勩€傚畠鏄竴涓紑婧愮殑**Agent 璁ょ煡杩愯鏃?*锛屼负 AI Agent 鎻愪緵锛?
+- 璺?session 璁板繂鎸佷箙鍖?- 缁撴瀯鍖栫煡璇嗗浘璋憋紙妯″潡渚濊禆銆侀」鐩害鏉熴€佽璁″喅绛栵級
+- 宸ヤ綔鍖虹姸鎬佷繚瀛橈紙褰撳墠娲昏穬鏂囦欢銆佸緟瀹氫簨椤癸級
+- 娣峰悎妫€绱紙鍏抽敭璇?+ 璇箟 + 鍏崇郴 + 鏃堕棿锛?
+浠婂ぉ姝ｅ紡浠?Apache-2.0 鍗忚寮€婧愩€?
+**锛堢 3 娈?鈥斺€?鍦烘櫙锛?*
 
-这不是 Agent 不够聪明，而是它缺乏**长期记忆**。
+Agent 鍦?Mneme 鐨勫姞鎸佷笅锛屽伐浣滄祦绋嬪彉鎴愶細
 
-**（第 2 段 —— 产品）**
+1. 浼氳瘽寮€濮?鈫?鍏堟煡鍘嗗彶璁板繂锛屼笉鎬ョ潃缈绘枃浠?2. 宸ヤ綔杩囩▼ 鈫?瀹炴椂璁板綍鍐崇瓥銆侀敊璇€佸彂鐜?3. 浼氳瘽缁撴潫 鈫?鍐欏洖鎽樿銆佸彉鏇村垪琛ㄣ€佸叧閿喅绛?4. 涓嬫浼氳瘽 鈫?涓婁笅鏂囪嚜鍔ㄦ仮澶嶏紝Agent 鐭ラ亾鑷繁浠庡摢缁х画
 
-Mneme 就是专门解决这个问题的。它是一个开源的**Agent 认知运行时**，为 AI Agent 提供：
-
-- 跨 session 记忆持久化
-- 结构化知识图谱（模块依赖、项目约束、设计决策）
-- 工作区状态保存（当前活跃文件、待定事项）
-- 混合检索（关键词 + 语义 + 关系 + 时间）
-
-今天正式以 Apache-2.0 协议开源。
-
-**（第 3 段 —— 场景）**
-
-Agent 在 Mneme 的加持下，工作流程变成：
-
-1. 会话开始 → 先查历史记忆，不急着翻文件
-2. 工作过程 → 实时记录决策、错误、发现
-3. 会话结束 → 写回摘要、变更列表、关键决策
-4. 下次会话 → 上下文自动恢复，Agent 知道自己从哪继续
-
-支持的 Agent 平台：OpenCode、Claude Code、Codex（通过 MCP 协议即插即用）。同时提供 Python、TypeScript、Go 三种语言的 SDK。
-
-**（第 4 段 —— 获取 + CTA）**
+鏀寔鐨?Agent 骞冲彴锛歄penCode銆丆laude Code銆丆odex锛堥€氳繃 MCP 鍗忚鍗虫彃鍗崇敤锛夈€傚悓鏃舵彁渚?Python銆乀ypeScript銆丟o 涓夌璇█鐨?SDK銆?
+**锛堢 4 娈?鈥斺€?鑾峰彇 + CTA锛?*
 
 - GitHub: {LINK}
-- 协议：Apache-2.0（完全开源）
-- 预编译二进制：Windows / Linux / macOS 预构建
-- 文档齐全：SDK 文档、API 参考、14 种记忆类型完整参考、Agent 集成 Guide
+- 鍗忚锛欰pache-2.0锛堝畬鍏ㄥ紑婧愶級
+- 棰勭紪璇戜簩杩涘埗锛歐indows / Linux / macOS 棰勬瀯寤?- 鏂囨。榻愬叏锛歋DK 鏂囨。銆丄PI 鍙傝€冦€?4 绉嶈蹇嗙被鍨嬪畬鏁村弬鑰冦€丄gent 闆嗘垚 Guide
 
-如果你在开发 AI Agent，或者想让你的编程助手"不要每次从头开始"——试试 Mneme。
-
+濡傛灉浣犲湪寮€鍙?AI Agent锛屾垨鑰呮兂璁╀綘鐨勭紪绋嬪姪鎵?涓嶈姣忔浠庡ご寮€濮?鈥斺€旇瘯璇?Mneme銆?
 ---
 
-## 通用 slogan / 一句话介绍
+## 閫氱敤 slogan / 涓€鍙ヨ瘽浠嬬粛
 
-| 用途 | 文字 |
+| 鐢ㄩ€?| 鏂囧瓧 |
 |------|------|
 | GitHub description | Open-source client SDKs, CLI, API docs, and prebuilt binaries for the Mneme agent cognition runtime. Apache-2.0. |
-| 定位一句话 | Mneme：给 AI Agent 装上长期记忆 |
-| 英文 elevator pitch | Mneme is a cognition runtime that gives AI agents persistent memory, knowledge graphs, and workspace state — across sessions. |
-| 中文 elevator pitch | Mneme 是一个 Agent 认知运行时，为 AI 编程助手提供跨 session 的长期记忆、知识图谱和工作区状态。 |
-| 技术一句话 | Git-like branching semantics × 14 cognitive memory types × hybrid search — for AI agents. |
-| 对比定位 | Not a vector DB. Not a chat log. A memory model for agents. |
+| 瀹氫綅涓€鍙ヨ瘽 | Mneme锛氱粰 AI Agent 瑁呬笂闀挎湡璁板繂 |
+| 鑻辨枃 elevator pitch | Mneme is a cognition runtime that gives AI agents persistent memory, knowledge graphs, and workspace state 鈥?across sessions. |
+| 涓枃 elevator pitch | Mneme 鏄竴涓?Agent 璁ょ煡杩愯鏃讹紝涓?AI 缂栫▼鍔╂墜鎻愪緵璺?session 鐨勯暱鏈熻蹇嗐€佺煡璇嗗浘璋卞拰宸ヤ綔鍖虹姸鎬併€?|
+| 鎶€鏈竴鍙ヨ瘽 | Git-like branching semantics 脳 14 cognitive memory types 脳 hybrid search 鈥?for AI agents. |
+| 瀵规瘮瀹氫綅 | Not a vector DB. Not a chat log. A memory model for agents. |
