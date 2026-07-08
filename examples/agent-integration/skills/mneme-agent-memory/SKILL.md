@@ -271,7 +271,7 @@ or maintenance script against the running server.
 
 ## Integration summary
 
-- [Mneme Cognitive Memory Taxonomy](mneme-memory-taxonomy.md) — full 14-type reference with schema-accurate `commit_memory` examples per type
+- [Mneme Cognitive Memory Taxonomy](reference/memory-taxonomy.md) — full 14-type reference with schema-accurate `commit_memory` examples per type
 
 | Agent | Config location | Skill location |
 |-------|----------------|----------------|

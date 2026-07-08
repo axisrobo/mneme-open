@@ -25,7 +25,7 @@ state, and project knowledge across sessions, and recalls them at task start.
    "Mneme" MCP server it can call for `mneme.search_memory(...)` etc.
 
 3. **Load a companion skill** that tells the agent *when* and *how* to use Mneme
-   — see the [universal skill](skills/mneme-agent-memory.md). Without a skill,
+   — see the [universal skill](skills/mneme-agent-memory/SKILL.md). Without a skill,
    the agent has the tool but doesn't know the memory lifecycle.
 
 ## Platform configs
@@ -49,7 +49,7 @@ Copy `opencode.json` into your project root (or merge into an existing one):
 If the binary is not on PATH, use an absolute path, e.g.:
 `"command": ["D:\\tools\\mneme-mcp-stdio.exe"]`.
 
-Then put the [universal skill](skills/mneme-agent-memory.md) into
+Then put the [universal skill](skills/mneme-agent-memory/SKILL.md) into
 `.opencode/skills/mneme-agent-memory/SKILL.md` — OpenCode auto-loads it.
 
 ### Claude Code
@@ -66,7 +66,7 @@ Add the MCP server to `~/.claude/settings.json`:
 }
 ```
 
-Then copy the [universal skill](skills/mneme-agent-memory.md) into your project
+Then copy the [universal skill](skills/mneme-agent-memory/SKILL.md) into your project
 as `CLAUDE.md` or a hook that invokes the recall/writeback patterns.
 
 ### Codex
@@ -84,7 +84,7 @@ session-end.
 
 ## Companion skill
 
-The **[universal agent-memory skill](skills/mneme-agent-memory.md)** covers the
+The **[universal agent-memory skill](skills/mneme-agent-memory/SKILL.md)** covers the
 full lifecycle:
 
 | Phase | What the agent does |

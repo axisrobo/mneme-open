@@ -4,7 +4,7 @@ Mneme has **14 distinct memory types**, each with its own schema, retention
 profile, and retrieval semantics. This guide covers when to use each type and
 shows concrete `commit_memory` examples for agent use.
 
-Refer back to the [companion skill](mneme-agent-memory.md) for the full
+Refer back to the [companion skill](../SKILL.md) for the full
 workflow — this document is the type reference.
 
 ## Choosing a type

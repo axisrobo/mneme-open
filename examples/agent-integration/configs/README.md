@@ -75,7 +75,7 @@ With persistence:
 }
 ```
 
-To load the skill, either merge the [companion skill](../skills/mneme-agent-memory.md)
+To load the skill, either merge the [companion skill](../skills/mneme-agent-memory/SKILL.md)
 content into your project's `CLAUDE.md`, or set up a hook that invokes the
 recall/writeback patterns at session boundaries.
 
