@@ -1,0 +1,54 @@
+import io
+import json
+import sys
+import unittest
+from contextlib import redirect_stdout
+from pathlib import Path
+
+# reuse the mneme-client package + its fake gRPC server
+_ROOT = Path(__file__).resolve().parents[2]  # clients/
+sys.path.insert(0, str(_ROOT / "python" / "src"))
+sys.path.insert(0, str(_ROOT / "python" / "tests"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from fake_server import serve  # from clients/python/tests
+from mneme_cli.main import main
+
+
+def _run(argv):
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        rc = main(argv)
+    return rc, buf.getvalue()
+
+
+class TestCli(unittest.TestCase):
+    def test_add_episode_prints_json(self):
+        with serve() as addr:
+            rc, out = _run(["--address", addr, "add-episode", "--branch", "main", "--content", "hello"])
+            self.assertEqual(rc, 0)
+            data = json.loads(out)
+            self.assertEqual(data["commit_id"], "mem_1")
+            self.assertEqual(data["branch_name"], "main")
+
+    def test_search_prints_results(self):
+        with serve() as addr:
+            rc, out = _run(["--address", addr, "search", "--branch", "main", "--query", "hi", "--top-k", "5"])
+            self.assertEqual(rc, 0)
+            data = json.loads(out)
+            self.assertEqual(len(data), 2)
+
+    def test_list_branches(self):
+        with serve() as addr:
+            rc, out = _run(["--address", addr, "list-branches"])
+            self.assertEqual(rc, 0)
+            data = json.loads(out)
+            self.assertEqual(data[0]["branch_name"], "main")
+
+    def test_unknown_command_errors(self):
+        with self.assertRaises(SystemExit):
+            main(["bogus-command"])
+
+
+if __name__ == "__main__":
+    unittest.main()
