@@ -4,11 +4,11 @@ package mneme.v1;
 
 option go_package = "github.com/axisrobo/mneme/go/api/mneme/v1;Mnemev1";
 
-// Mneme is the core memory閳ユ唭peration service.  Every method corresponds to a
-// stable operation in the mneme.memory.v1閳ユ吀raft contract.
+// Mneme is the core memory-operation service. Every method corresponds to a
+// stable operation in the mneme.memory.v1-draft contract.
 
 service Mneme {
-  // 閳光偓閳光偓 typed writes 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+  // --- typed writes ---
   rpc CommitMemory   (CommitMemoryRequest)   returns (CommitMemoryResponse);
   rpc AddEpisode     (AddEpisodeRequest)     returns (AddEpisodeResponse);
   rpc AddFact        (AddFactRequest)        returns (AddFactResponse);
@@ -16,29 +16,29 @@ service Mneme {
   rpc UpsertSubject  (UpsertSubjectRequest)  returns (UpsertSubjectResponse);
   rpc UpsertEntity   (UpsertEntityRequest)   returns (UpsertEntityResponse);
 
-  // 閳光偓閳光偓 queries 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+  // --- queries ---
   rpc SearchMemory   (SearchMemoryRequest)   returns (SearchMemoryResponse);
   rpc QueryMemories  (QueryMemoriesRequest)  returns (QueryMemoriesResponse);
   rpc QueryFacts     (QueryFactsRequest)     returns (QueryFactsResponse);
 
-  // 閳光偓閳光偓 resolution 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+  // --- resolution ---
   rpc ResolveEntity          (ResolveEntityRequest)          returns (ResolveEntityResponse);
   rpc ResolveEntityExplained (ResolveEntityExplainedRequest) returns (ResolveEntityExplainedResponse);
 
-  // 閳光偓閳光偓 extraction (Phase閳?) 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+  // --- extraction ---
   rpc ExtractEpisode (ExtractEpisodeRequest) returns (ExtractEpisodeResponse);
 
-  // 閳光偓閳光偓 branching 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+  // --- branching ---
   rpc CreateBranch  (CreateBranchRequest)  returns (CreateBranchResponse);
   rpc MergeBranch   (MergeBranchRequest)   returns (MergeBranchResponse);
   rpc ListBranches  (ListBranchesRequest)  returns (ListBranchesResponse);
 
-  // 閳光偓閳光偓 maintenance (Phase閳?) 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+  // --- maintenance ---
   rpc SetRetentionState  (SetRetentionStateRequest)  returns (SetRetentionStateResponse);
   rpc VerifyCommitIndex  (VerifyCommitIndexRequest)  returns (VerifyCommitIndexResponse);
 }
 
-// 閳光偓閳光偓 shared types 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+// --- shared types ---
 
 message Commit {
   int32           sequence            = 1;
@@ -81,7 +81,7 @@ message ExtractionRun {
   string          error               = 8;   // only when quarantined
 }
 
-// google.protobuf.Value閳ユ唨ike wrapper for arbitrary JSON.
+// google.protobuf.Value-like wrapper for arbitrary JSON.
 message Value {
   oneof kind {
     string string_value  = 1;
@@ -94,7 +94,7 @@ message Value {
   message List   { repeated Value values    = 1; }
 }
 
-// 閳光偓閳光偓 request / response messages 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+// --- request / response messages ---
 
 message CommitMemoryRequest {
   string          branch_name         = 1;

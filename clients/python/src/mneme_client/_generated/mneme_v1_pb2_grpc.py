@@ -26,8 +26,8 @@ if _version_not_supported:
 
 
 class MnemeStub:
-    """Mneme is the core memory閳ユ唭peration service.  Every method corresponds to a
-    stable operation in the mneme.memory.v1閳ユ吀raft contract.
+    """Mneme is the core memory-operation service. Every method corresponds to a
+    stable operation in the mneme.memory.v1-draft contract.
 
     """
 
@@ -125,13 +125,13 @@ class MnemeStub:
 
 
 class MnemeServicer:
-    """Mneme is the core memory閳ユ唭peration service.  Every method corresponds to a
-    stable operation in the mneme.memory.v1閳ユ吀raft contract.
+    """Mneme is the core memory-operation service. Every method corresponds to a
+    stable operation in the mneme.memory.v1-draft contract.
 
     """
 
     def CommitMemory(self, request, context):
-        """閳光偓閳光偓 typed writes 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+        """--- typed writes ---
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -168,7 +168,7 @@ class MnemeServicer:
         raise NotImplementedError('Method not implemented!')
 
     def SearchMemory(self, request, context):
-        """閳光偓閳光偓 queries 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+        """--- queries ---
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -187,7 +187,7 @@ class MnemeServicer:
         raise NotImplementedError('Method not implemented!')
 
     def ResolveEntity(self, request, context):
-        """閳光偓閳光偓 resolution 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+        """--- resolution ---
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -200,14 +200,14 @@ class MnemeServicer:
         raise NotImplementedError('Method not implemented!')
 
     def ExtractEpisode(self, request, context):
-        """閳光偓閳光偓 extraction (Phase閳?) 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+        """--- extraction ---
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def CreateBranch(self, request, context):
-        """閳光偓閳光偓 branching 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+        """--- branching ---
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -226,7 +226,7 @@ class MnemeServicer:
         raise NotImplementedError('Method not implemented!')
 
     def SetRetentionState(self, request, context):
-        """閳光偓閳光偓 maintenance (Phase閳?) 閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓閳光偓
+        """--- maintenance ---
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -335,8 +335,8 @@ def add_MnemeServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Mneme:
-    """Mneme is the core memory閳ユ唭peration service.  Every method corresponds to a
-    stable operation in the mneme.memory.v1閳ユ吀raft contract.
+    """Mneme is the core memory-operation service. Every method corresponds to a
+    stable operation in the mneme.memory.v1-draft contract.
 
     """
 
