@@ -1,4 +1,13 @@
-# Mneme TypeScript Client (planned)
+# @axisrobo/mneme-client (TypeScript)
 
-Thin network client for Mneme (browser/Node), transport-abstracted.
-Published to `Mneme-open` under Apache-2.0. Status: scaffold.
+Thin client for a running Mneme server over JSON-RPC/HTTP. Browser + Node 18+, no runtime deps.
+
+```ts
+import { MnemeClient } from "@axisrobo/mneme-client";
+
+const client = new MnemeClient("http://localhost:8000");
+await client.addEpisode({ branch_name: "main", content: "hello" });
+const results = await client.searchMemory({ branch_name: "main", query: "hello", top_k: 5 });
+```
+
+Points at the server's `POST /api/v1/jsonrpc` endpoint; exposes the full Mneme method set.

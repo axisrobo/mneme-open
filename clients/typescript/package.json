@@ -1,0 +1,17 @@
+{
+  "name": "@axisrobo/mneme-client",
+  "version": "0.1.0",
+  "description": "Thin TypeScript client for the Mneme cognition runtime (JSON-RPC over HTTP)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" } },
+  "files": ["dist", "README.md"],
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.test.json && node --test \"dist-test/test/**/*.test.js\""
+  },
+  "devDependencies": { "typescript": "^5.4.0", "@types/node": "^20.0.0" },
+  "license": "Apache-2.0"
+}
