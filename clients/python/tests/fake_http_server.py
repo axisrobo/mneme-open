@@ -19,6 +19,8 @@ class _Handler(BaseHTTPRequestHandler):
             body = {"jsonrpc": "2.0", "id": rid, "result": result}
         elif method == "mneme.search_memory":
             body = {"jsonrpc": "2.0", "id": rid, "result": [{"score": 0.9}, {"score": 0.5}]}
+        elif method == "mneme.list_branches":
+            body = {"jsonrpc": "2.0", "id": rid, "result": [{"branch_name": "main", "head_sequence": 3}]}
         else:
             body = {"jsonrpc": "2.0", "id": rid, "error": {"code": -32601, "message": "method not found"}}
         data = json.dumps(body).encode("utf-8")

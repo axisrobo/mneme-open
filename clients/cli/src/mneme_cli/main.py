@@ -5,7 +5,7 @@ import json
 import sys
 from typing import Any
 
-from mneme_client import MnemeClient, MnemeError
+from mneme_client import AsyncMnemeHttpClient, MnemeClient, MnemeError, MnemeHttpClient  # noqa: F401
 
 
 def _print(obj: Any) -> None:
@@ -13,12 +13,40 @@ def _print(obj: Any) -> None:
 
 
 def _identity(args) -> dict[str, str]:
-    return {"tenant_id": args.tenant or "", "project_id": args.project or ""}
+    ident: dict[str, str] = {}
+    if args.tenant:
+        ident["tenant_id"] = args.tenant
+    if args.project:
+        ident["project_id"] = args.project
+    return ident
+
+
+# command -> JSON-RPC method (used by the HTTP transport and to document the surface)
+_COMMAND_RPC = {
+    "add-episode": "mneme.add_episode",
+    "add-fact": "mneme.add_fact",
+    "commit": "mneme.commit_memory",
+    "invalidate-fact": "mneme.invalidate_fact",
+    "upsert-subject": "mneme.upsert_subject",
+    "upsert-entity": "mneme.upsert_entity",
+    "search": "mneme.search_memory",
+    "query-memories": "mneme.query_memories",
+    "query-facts": "mneme.query_facts",
+    "resolve-entity": "mneme.resolve_entity",
+    "resolve-entity-explained": "mneme.resolve_entity_explained",
+    "extract-episode": "mneme.extract_episode",
+    "create-branch": "mneme.create_branch",
+    "merge-branch": "mneme.merge_branch",
+    "list-branches": "mneme.list_branches",
+    "set-retention-state": "mneme.set_retention_state",
+    "verify-index": "mneme.verify_commit_index",
+}
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="mneme", description="Mneme gRPC command-line client")
-    p.add_argument("--address", default="localhost:9090")
+    p = argparse.ArgumentParser(prog="mneme", description="Mneme command-line client (gRPC or JSON-RPC/HTTP)")
+    p.add_argument("--transport", choices=["grpc", "http"], default="grpc")
+    p.add_argument("--address", default="", help="server address (default localhost:9090 grpc, http://localhost:8080 http)")
     p.add_argument("--tenant", default="")
     p.add_argument("--project", default="")
     sub = p.add_subparsers(dest="command", required=True)
@@ -62,10 +90,55 @@ def build_parser() -> argparse.ArgumentParser:
 
     s = sub.add_parser("set-retention-state"); s.add_argument("--commit", required=True); s.add_argument("--state", required=True)
     s = sub.add_parser("verify-index"); s.add_argument("--commit", default="")
+
+    s = sub.add_parser("call", help="invoke any JSON-RPC method (HTTP transport; full surface)")
+    s.add_argument("method", help="e.g. mneme.build_context")
+    s.add_argument("--param", action="append", default=[], metavar="K=V", help="repeatable; value parsed as JSON, else string")
     return p
 
 
-def _dispatch(args, client: MnemeClient) -> Any:
+def _params(args) -> dict[str, Any]:
+    """Build the JSON-RPC params for a command from parsed args (used by the HTTP transport)."""
+    c = args.command
+    p = _identity(args)
+    if c == "add-episode":
+        p.update(branch_name=args.branch, content=args.content, episode_type=args.episode_type, source=args.source, observed_at=args.observed_at)
+    elif c == "add-fact":
+        p.update(branch_name=args.branch, fact_id=args.fact_id, subject_id=args.subject, predicate=args.predicate,
+                 object_value=args.object, valid_from=args.valid_from, valid_to=args.valid_to, confidence=args.confidence)
+    elif c == "commit":
+        p.update(branch_name=args.branch, memory_type=args.memory_type, payload=json.loads(args.payload),
+                 metadata=json.loads(args.metadata), owner_subject_id=args.owner_subject_id)
+    elif c == "invalidate-fact":
+        p.update(branch_name=args.branch, fact_id=args.fact_id, invalidated_at=args.invalidated_at, reason=args.reason)
+    elif c == "upsert-subject":
+        p.update(subject_id=args.subject_id, subject_type=args.subject_type, display_name=args.display_name)
+    elif c == "upsert-entity":
+        p.update(entity_id=args.entity_id, entity_type=args.entity_type, canonical_name=args.canonical_name, metadata=json.loads(args.metadata))
+    elif c == "search":
+        p.update(branch_name=args.branch, query=args.query, top_k=args.top_k, entity_ids=args.entity_id)
+    elif c == "query-memories":
+        p.update(branch_name=args.branch, entity_ids=args.entity_id, limit=args.limit)
+    elif c == "query-facts":
+        p.update(branch_name=args.branch, fact_id=args.fact_id, subject_id=args.subject, predicate=args.predicate,
+                 true_at=args.true_at, include_invalidated=args.include_invalidated, limit=args.limit)
+    elif c in ("resolve-entity", "resolve-entity-explained"):
+        p.update(mention=args.mention, entity_type=args.entity_type)
+    elif c == "extract-episode":
+        p.update(branch_name=args.branch, episode_commit_id=args.commit, provider=args.provider)
+    elif c == "create-branch":
+        p.update(branch_name=args.name, from_branch=args.from_branch)
+    elif c == "merge-branch":
+        p.update(source_branch=args.source, target_branch=args.target, strategy=args.strategy)
+    elif c == "set-retention-state":
+        p.update(commit_id=args.commit, retention_state=args.state)
+    elif c == "verify-index":
+        p.update(commit_id=args.commit)
+    # list-branches: no extra params
+    return p
+
+
+def _dispatch_grpc(args, client: MnemeClient) -> Any:
     ident = _identity(args)
     c = args.command
     if c == "add-episode":
@@ -112,14 +185,42 @@ def _dispatch(args, client: MnemeClient) -> Any:
         return client.set_retention_state(commit_id=args.commit, retention_state=args.state, **ident)
     if c == "verify-index":
         return client.verify_commit_index(commit_id=args.commit, **ident)
+    if c == "call":
+        raise SystemExit("the 'call' command requires --transport http")
     raise SystemExit(f"unknown command: {c}")
+
+
+def _parse_call_params(items: list[str]) -> dict[str, Any]:
+    params: dict[str, Any] = {}
+    for item in items:
+        key, sep, value = item.partition("=")
+        if not sep:
+            raise SystemExit(f"bad --param {item!r} (want K=V)")
+        try:
+            params[key] = json.loads(value)
+        except json.JSONDecodeError:
+            params[key] = value
+    return params
+
+
+def _dispatch_http(args, client: MnemeHttpClient) -> Any:
+    if args.command == "call":
+        params = _identity(args)
+        params.update(_parse_call_params(args.param))
+        return client.call(args.method, **params)
+    return client.call(_COMMAND_RPC[args.command], **_params(args))
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    address = args.address or ("http://localhost:8080" if args.transport == "http" else "localhost:9090")
     try:
-        with MnemeClient(args.address) as client:
-            _print(_dispatch(args, client))
+        if args.transport == "http":
+            client = MnemeHttpClient(address)
+            _print(_dispatch_http(args, client))
+        else:
+            with MnemeClient(address) as client:
+                _print(_dispatch_grpc(args, client))
         return 0
     except MnemeError as err:
         print(f"error: {err}", file=sys.stderr)
