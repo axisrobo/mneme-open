@@ -271,6 +271,8 @@ or maintenance script against the running server.
 
 ## Integration summary
 
+- [Mneme Cognitive Memory Taxonomy](mneme-memory-taxonomy.md) — full 14-type reference with schema-accurate `commit_memory` examples per type
+
 | Agent | Config location | Skill location |
 |-------|----------------|----------------|
 | **OpenCode** | `opencode.json` (project root) — add the Mneme MCP server entry | `.opencode/skills/mneme-agent-memory/SKILL.md` (this file) |
