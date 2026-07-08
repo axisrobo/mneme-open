@@ -75,6 +75,56 @@ The gRPC transport supports the 17 RPCs defined in `contracts/mneme.v1.proto`. M
 present in the proto (e.g. `mneme.build_context`) return a `*MnemeError` when invoked over gRPC;
 use the JSON-RPC transport for the full surface.
 
+## CLI (`cmd/mneme`)
+
+A `mneme` command-line binary ships in this module. It talks to a running server over either
+transport (`--transport grpc|http`), exposes the core operations as named subcommands, and
+provides a generic `call` for the full method surface.
+
+### Build
+
+```
+go build ./cmd/mneme
+```
+
+This produces a `mneme` (or `mneme.exe` on Windows) binary in the current directory.
+
+### Global flags
+
+- `--transport grpc|http` (default `grpc`)
+- `--address ADDR` (defaults: `localhost:9090` for gRPC, `http://localhost:8080` for HTTP)
+- `--tenant TENANT_ID`, `--project PROJECT_ID` — added to every request's params
+
+### Examples
+
+```
+# Write an episode over HTTP.
+mneme --transport http --address http://localhost:8080 add-episode --branch-name main --content "hi"
+
+# List branches over gRPC (the default transport).
+mneme --address localhost:9090 list-branches
+
+# Search memory.
+mneme --transport http search --branch-name main --query "deploy" --top-k 5
+```
+
+Named subcommands map kebab-case flags to snake_case JSON-RPC params (e.g. `--top-k` → `top_k`),
+and only flags you actually set are sent.
+
+### Generic `call`
+
+`--transport http` reaches the full method surface — including methods without a named subcommand
+(e.g. `mneme.build_context`) — via `call`. Repeatable `--param k=v` values are parsed as JSON when
+possible, otherwise treated as a string:
+
+```
+mneme --transport http call mneme.build_context --param query='"x"' --param branch_name=main
+```
+
+> **Note:** `commit --payload` (and `--metadata`) take JSON objects and work best over
+> `--transport http`. Over gRPC the payload maps to a custom `Value` structure, so the JSON-RPC
+> (HTTP) transport is recommended for `commit`.
+
 ## Errors
 
 Transport and server failures surface as `*MnemeError{Code, Message}`.
