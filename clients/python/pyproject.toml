@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mneme-client"
+version = "0.1.0"
+description = "Thin gRPC client for the Mneme cognition runtime"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["grpcio>=1.60", "protobuf>=4.25"]
+
+[project.optional-dependencies]
+dev = ["grpcio-tools>=1.60"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

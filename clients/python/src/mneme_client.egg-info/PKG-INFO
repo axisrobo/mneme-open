@@ -1,3 +1,14 @@
+Metadata-Version: 2.4
+Name: mneme-client
+Version: 0.1.0
+Summary: Thin gRPC client for the Mneme cognition runtime
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: grpcio>=1.60
+Requires-Dist: protobuf>=4.25
+Provides-Extra: dev
+Requires-Dist: grpcio-tools>=1.60; extra == "dev"
+
 # Mneme Python Client
 
 `mneme-client` is a thin sync + async Python gRPC client for the
